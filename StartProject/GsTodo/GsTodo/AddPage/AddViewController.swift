@@ -29,7 +29,6 @@ class AddViewController: UIViewController {
     }
     
     // MARK: Setup
-    
     fileprivate func setupMemoTextView() {
         memoTextView.layer.borderWidth = 1
         memoTextView.layer.borderColor = UIColor.lightGray.cgColor
@@ -78,6 +77,7 @@ class AddViewController: UIViewController {
 
 
 // TODO: アクセス修飾子の説明。質問があったら。
+// private, public, internal(デフォルトではこれ)
 
 //
 //class Test {

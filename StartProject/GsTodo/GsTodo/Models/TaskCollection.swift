@@ -9,7 +9,7 @@
 import Foundation
 
 protocol TaskCollectionDelegate: class {
-    func reload()
+    func saved()
 }
 
 class TaskCollection {
@@ -28,6 +28,6 @@ class TaskCollection {
     }
     
     func save() {
-        delegate?.reload()
+        delegate?.saved()
     }
 }
