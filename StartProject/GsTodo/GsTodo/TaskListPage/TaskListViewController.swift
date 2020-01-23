@@ -25,6 +25,7 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.register( nib, forCellReuseIdentifier: "CustomCell")
         
         // デリゲートのメソッドを使うために記述している。
+        // delegete に自分を入れて、TaskCollection で行われた変更を知ることができるようにしている。
         TaskCollection.shared.delegate = self
         
         setupNavigationBar()
@@ -57,9 +58,10 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
     
 }
 
+// extension で分けた方が見やすくなる
 extension TaskListViewController: TaskCollectionDelegate {
     // デリゲートのメソッド
-    func reload() {
+    func saved() {
         // tableView をリロードして、画面を更新する。
         tableView.reloadData()
     }
