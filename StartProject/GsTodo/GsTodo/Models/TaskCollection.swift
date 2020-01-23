@@ -17,7 +17,8 @@ class TaskCollection {
     static var shared = TaskCollection()
     //外部からの初期化を禁止
     private init(){}
-    //外部からは参照のみ許可
+    
+    //外部からは参照のみ許可 // ここに全ての情報が持っている！！！
     private(set) var tasks: [Task] = []
     //弱参照して循環参照を防ぐ
     weak var delegate: TaskCollectionDelegate? = nil
@@ -28,6 +29,11 @@ class TaskCollection {
     }
     
     func editTask() {
+        save()
+    }
+    
+    func removeTask(index: Int) {
+        tasks.remove(at: index)
         save()
     }
     

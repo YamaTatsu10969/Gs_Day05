@@ -32,6 +32,16 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         // Do any additional setup after loading the view.
     }
     
+    fileprivate func setupNavigationBar() {
+        let rightButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddScreen))
+        navigationItem.rightBarButtonItem = rightButtonItem
+    }
+    
+    @objc func showAddScreen() {
+        let vc = AddViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     // MARK: UITableView
     
     /// 1つの Section の中の Row　の数を定義する(セルの数を定義)
@@ -46,20 +56,16 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
+    #warning("ここにタップした時の処理を入れる")
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = AddViewController()
         vc.selectedTask = TaskCollection.shared.getTask(index: indexPath.row)
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    fileprivate func setupNavigationBar() {
-        let rightButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddScreen))
-        navigationItem.rightBarButtonItem = rightButtonItem
-    }
-    
-    @objc func showAddScreen() {
-        let vc = AddViewController()
-        navigationController?.pushViewController(vc, animated: true)
+    #warning("ここにスワイプして削除する時の処理を入れる")
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        TaskCollection.shared.removeTask(index: indexPath.row)
     }
     
 }

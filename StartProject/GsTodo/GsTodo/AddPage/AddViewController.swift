@@ -29,6 +29,7 @@ class AddViewController: UIViewController {
         setupMemoTextView()
         setupNavigationBar()
         
+        #warning("ここにEditかどうかの判定を入れる")
         if let selectedTask = selectedTask {
             title = "編集"
             titleTextField.text = selectedTask.title
@@ -64,9 +65,10 @@ class AddViewController: UIViewController {
             return // return を実行すると、このメソッドの処理がここで終了する。
         }
         
+        #warning("ここにEditかどうかの判定を入れる")
         // ここで Edit か Add　かを判定している
         if let selectedTask = selectedTask {
-            // こっちは Edit
+            // Edit
             selectedTask.title = title
             TaskCollection.shared.editTask()
         } else {
