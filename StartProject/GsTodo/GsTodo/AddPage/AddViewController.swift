@@ -22,10 +22,18 @@ class AddViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var memoTextView: UITextView!
     
+    var selectedTask: Task?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMemoTextView()
         setupNavigationBar()
+        
+        if let selectedTask = selectedTask {
+            title = "編集"
+            titleTextField.text = selectedTask.title
+            memoTextView.text = selectedTask.memo
+        }
     }
     
     // MARK: Setup
@@ -56,8 +64,16 @@ class AddViewController: UIViewController {
             return // return を実行すると、このメソッドの処理がここで終了する。
         }
         
-        let task = Task(title: title)
-        TaskCollection.shared.addTask(task)
+        // ここで Edit か Add　かを判定している
+        if let selectedTask = selectedTask {
+            // こっちは Edit
+            selectedTask.title = title
+            TaskCollection.shared.editTask()
+        } else {
+            // Add
+            let task = Task(title: title)
+            TaskCollection.shared.addTask(task)
+        }
         
         // 前の画面に戻る
         navigationController?.popViewController(animated: true)

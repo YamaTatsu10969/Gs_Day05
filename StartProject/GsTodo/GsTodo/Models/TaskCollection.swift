@@ -27,6 +27,14 @@ class TaskCollection {
         save()
     }
     
+    func editTask() {
+        save()
+    }
+    
+    func getTask(index: Int) -> Task {
+        return tasks[index]
+    }
+    
     func save() {
         delegate?.saved()
     }

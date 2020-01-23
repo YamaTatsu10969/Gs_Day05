@@ -46,6 +46,12 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = AddViewController()
+        vc.selectedTask = TaskCollection.shared.getTask(index: indexPath.row)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     fileprivate func setupNavigationBar() {
         let rightButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddScreen))
         navigationItem.rightBarButtonItem = rightButtonItem
