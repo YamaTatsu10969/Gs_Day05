@@ -28,6 +28,8 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         // delegete に自分を入れて、TaskCollection で行われた変更を知ることができるようにしている。
         TaskCollection.shared.delegate = self
         
+        TaskCollection.shared.load()
+        
         setupNavigationBar()
         // Do any additional setup after loading the view.
     }
@@ -75,6 +77,10 @@ extension TaskListViewController: TaskCollectionDelegate {
     // デリゲートのメソッド
     func saved() {
         // tableView をリロードして、画面を更新する。
+        tableView.reloadData()
+    }
+    
+    func loaded() {
         tableView.reloadData()
     }
 }

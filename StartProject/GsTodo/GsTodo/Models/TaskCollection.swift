@@ -10,6 +10,7 @@ import Foundation
 
 protocol TaskCollectionDelegate: class {
     func saved()
+    func loaded()
 }
 
 class TaskCollection {
@@ -20,6 +21,10 @@ class TaskCollection {
     
     //外部からは参照のみ許可 // ここに全ての情報が持っている！！！
     private(set) var tasks: [Task] = []
+    
+    // UserDefaults に使うキー
+    let userDefaultsTasksKey = "user_tasks"
+    
     //弱参照して循環参照を防ぐ
     weak var delegate: TaskCollectionDelegate? = nil
     
@@ -42,6 +47,26 @@ class TaskCollection {
     }
     
     func save() {
+        let encoder = JSONEncoder()
+        do {
+            let data = try encoder.encode(tasks)
+            UserDefaults.standard.set(data, forKey: userDefaultsTasksKey)
+        } catch {
+            print(error)
+        }
         delegate?.saved()
+    }
+    
+    func load() {
+        let decoder = JSONDecoder()
+        do {
+            guard let data = UserDefaults.standard.data(forKey: userDefaultsTasksKey) else {
+                return
+            }
+            tasks = try decoder.decode([Task].self, from: data)
+        } catch {
+            print(error)
+        }
+        delegate?.loaded()
     }
 }

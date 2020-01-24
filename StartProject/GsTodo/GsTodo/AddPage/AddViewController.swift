@@ -7,6 +7,8 @@
 //
 
 import UIKit
+#warning("ここに PKHUD を import しよう！")
+import PKHUD
 
 class AddViewController: UIViewController {
     
@@ -61,7 +63,10 @@ class AddViewController: UIViewController {
         
         if title.isEmpty {
             print(title, "👿titleが空っぽだぞ〜")
-            showAlert("👿 タイトルが入力されていません！！！")
+            
+            #warning("showAlert を PKHUD に変更しよう！")
+            HUD.flash(.labeledError(title: nil, subtitle: "👿 タイトルが入力されていません！！！"), delay: 1)
+            // showAlert("👿 タイトルが入力されていません！！！")
             return // return を実行すると、このメソッドの処理がここで終了する。
         }
         
@@ -77,6 +82,8 @@ class AddViewController: UIViewController {
             TaskCollection.shared.addTask(task)
         }
         
+        #warning("ここにHUD.flash の success を入れる")
+        HUD.flash(.success, delay: 0.3)
         // 前の画面に戻る
         navigationController?.popViewController(animated: true)
     }
