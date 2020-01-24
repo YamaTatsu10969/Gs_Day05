@@ -10,7 +10,7 @@ import Foundation
 
 // Task のクラス。
 // プロパティに title と memo を持っている
-class Task {
+class Task: Codable {
     var title: String
     var memo: String?
     
