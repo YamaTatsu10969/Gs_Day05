@@ -6,6 +6,6 @@ target 'GsTodo' do
   use_frameworks!
 
   # Pods for GsTodo
-  pod 'SVProgressHUD'
+  pod 'PKHUD'
 
 end
