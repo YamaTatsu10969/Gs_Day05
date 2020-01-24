@@ -7,25 +7,28 @@
 //
 
 import UIKit
+#warning("ここに PKHUD を import しよう！")
+import PKHUD
 
 class AddViewController: UIViewController {
-    
-    // # 手順
-    // 1. UIを作成する。
-    // label + textField + label + textView
-    // 2. textView の UI を追加(boarder, cornerRadius)
-    // 3. 2 をメソッド化する
-    // 4. navigationBar に rightBarButtonItem を追加する(title は "Save", style = .plain, target = self, action = nil)
-    // 5.
     
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var memoTextView: UITextView!
     
+    var selectIndex: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMemoTextView()
         setupNavigationBar()
+        
+        #warning("ここにEditかどうかの判定を入れる")
+        if let index = selectIndex {
+            title = "編集"
+            titleTextField.text = TaskCollection.shared.tasks[index].title
+            memoTextView.text = TaskCollection.shared.tasks[index].memo
+        }
     }
     
     // MARK: Setup
@@ -52,13 +55,27 @@ class AddViewController: UIViewController {
         
         if title.isEmpty {
             print(title, "👿titleが空っぽだぞ〜")
-            showAlert("👿 タイトルが入力されていません！！！")
+            
+            #warning("showAlert を PKHUD に変更しよう！")
+            HUD.flash(.labeledError(title: nil, subtitle: "👿 タイトルが入力されていません！！！"), delay: 1)
+            // showAlert("👿 タイトルが入力されていません！！！")
             return // return を実行すると、このメソッドの処理がここで終了する。
         }
         
-        let task = Task(title: title)
-        TaskCollection.shared.addTask(task)
+        #warning("ここにEditかどうかの判定を入れる")
+        // ここで Edit か Add　かを判定している
+        if let index = selectIndex {
+            // Edit
+            let editTask = Task(title: title, memo: memoTextView.text)
+            TaskCollection.shared.editTask(task: editTask, index: index)
+        } else {
+            // Add
+            let task = Task(title: title, memo: memoTextView.text)
+            TaskCollection.shared.addTask(task)
+        }
         
+        #warning("ここにHUD.flash の success を入れる")
+        HUD.flash(.success, delay: 0.3)
         // 前の画面に戻る
         navigationController?.popViewController(animated: true)
     }

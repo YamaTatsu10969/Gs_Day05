@@ -28,8 +28,21 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         // delegete に自分を入れて、TaskCollection で行われた変更を知ることができるようにしている。
         TaskCollection.shared.delegate = self
         
+        #warning("ロードする")
+        TaskCollection.shared.load()
+        
         setupNavigationBar()
         // Do any additional setup after loading the view.
+    }
+    
+    fileprivate func setupNavigationBar() {
+        let rightButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddScreen))
+        navigationItem.rightBarButtonItem = rightButtonItem
+    }
+    
+    @objc func showAddScreen() {
+        let vc = AddViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     // MARK: UITableView
@@ -46,14 +59,16 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
-    fileprivate func setupNavigationBar() {
-        let rightButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddScreen))
-        navigationItem.rightBarButtonItem = rightButtonItem
+    #warning("ここにタップした時の処理を入れる")
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = AddViewController()
+        vc.selectIndex = indexPath.row
+        navigationController?.pushViewController(vc, animated: true)
     }
     
-    @objc func showAddScreen() {
-        let vc = AddViewController()
-        navigationController?.pushViewController(vc, animated: true)
+    #warning("ここにスワイプして削除する時の処理を入れる")
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        TaskCollection.shared.removeTask(index: indexPath.row)
     }
     
 }
@@ -63,6 +78,10 @@ extension TaskListViewController: TaskCollectionDelegate {
     // デリゲートのメソッド
     func saved() {
         // tableView をリロードして、画面を更新する。
+        tableView.reloadData()
+    }
+    
+    func loaded() {
         tableView.reloadData()
     }
 }
