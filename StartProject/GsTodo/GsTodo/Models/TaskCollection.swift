@@ -22,6 +22,7 @@ class TaskCollection {
     //外部からは参照のみ許可 // ここに全ての情報が持っている！！！
     private(set) var tasks: [Task] = []
     
+    #warning("ここにUserDefaults で使うキーを置いておく。打ち間違いを減らすように。")
     // UserDefaults に使うキー
     let userDefaultsTasksKey = "user_tasks"
     
@@ -33,7 +34,8 @@ class TaskCollection {
         save()
     }
     
-    func editTask() {
+    func editTask(task: Task, index: Int) {
+        tasks[index] = task
         save()
     }
     
@@ -42,11 +44,8 @@ class TaskCollection {
         save()
     }
     
-    func getTask(index: Int) -> Task {
-        return tasks[index]
-    }
-    
     func save() {
+        #warning("UserDefaults の保存の処理")
         let encoder = JSONEncoder()
         do {
             let data = try encoder.encode(tasks)

@@ -28,6 +28,7 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         // delegete に自分を入れて、TaskCollection で行われた変更を知ることができるようにしている。
         TaskCollection.shared.delegate = self
         
+        #warning("ロードする")
         TaskCollection.shared.load()
         
         setupNavigationBar()
@@ -61,7 +62,7 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
     #warning("ここにタップした時の処理を入れる")
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = AddViewController()
-        vc.selectedTask = TaskCollection.shared.getTask(index: indexPath.row)
+        vc.selectIndex = indexPath.row
         navigationController?.pushViewController(vc, animated: true)
     }
     

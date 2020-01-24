@@ -12,19 +12,11 @@ import PKHUD
 
 class AddViewController: UIViewController {
     
-    // # 手順
-    // 1. UIを作成する。
-    // label + textField + label + textView
-    // 2. textView の UI を追加(boarder, cornerRadius)
-    // 3. 2 をメソッド化する
-    // 4. navigationBar に rightBarButtonItem を追加する(title は "Save", style = .plain, target = self, action = nil)
-    // 5.
-    
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var memoTextView: UITextView!
     
-    var selectedTask: Task?
+    var selectIndex: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +24,10 @@ class AddViewController: UIViewController {
         setupNavigationBar()
         
         #warning("ここにEditかどうかの判定を入れる")
-        if let selectedTask = selectedTask {
+        if let index = selectIndex {
             title = "編集"
-            titleTextField.text = selectedTask.title
-            memoTextView.text = selectedTask.memo
+            titleTextField.text = TaskCollection.shared.tasks[index].title
+            memoTextView.text = TaskCollection.shared.tasks[index].memo
         }
     }
     
@@ -72,13 +64,13 @@ class AddViewController: UIViewController {
         
         #warning("ここにEditかどうかの判定を入れる")
         // ここで Edit か Add　かを判定している
-        if let selectedTask = selectedTask {
+        if let index = selectIndex {
             // Edit
-            selectedTask.title = title
-            TaskCollection.shared.editTask()
+            let editTask = Task(title: title, memo: memoTextView.text)
+            TaskCollection.shared.editTask(task: editTask, index: index)
         } else {
             // Add
-            let task = Task(title: title)
+            let task = Task(title: title, memo: memoTextView.text)
             TaskCollection.shared.addTask(task)
         }
         

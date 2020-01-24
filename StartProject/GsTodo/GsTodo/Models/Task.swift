@@ -15,7 +15,9 @@ class Task: Codable {
     var memo: String?
     
     // init とは、Task を作るときに呼ばれるメソッド。(イニシャライザという)
-    init(title: String) {
+    // 使い方： let task = Task(title: "プログラミング")
+    init(title: String, memo: String = "") {
         self.title = title
+        self.memo = memo
     }
 }
