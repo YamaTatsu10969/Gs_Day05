@@ -16,6 +16,7 @@ class AddViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var memoTextView: UITextView!
     
+    #warning("selectIndex を追加")
     var selectIndex: Int?
     
     override func viewDidLoad() {

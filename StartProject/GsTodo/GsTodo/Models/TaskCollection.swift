@@ -10,7 +10,8 @@ import Foundation
 
 protocol TaskCollectionDelegate: class {
     func saved()
-    func loaded()
+    #warning("loaded を追加")
+
 }
 
 class TaskCollection {
@@ -23,49 +24,31 @@ class TaskCollection {
     private(set) var tasks: [Task] = []
     
     #warning("ここにUserDefaults で使うキーを置いておく。打ち間違いを減らすように。")
-    // UserDefaults に使うキー
-    let userDefaultsTasksKey = "user_tasks"
+
     
     //弱参照して循環参照を防ぐ
-    weak var delegate: TaskCollectionDelegate? = nil
+    weak var delegate: TaskCollectionDelegate?
     
     func addTask(_ task: Task) {
         tasks.append(task)
         save()
     }
     
-    func editTask(task: Task, index: Int) {
-        tasks[index] = task
-        save()
-    }
+    #warning("editTask を追加")
     
-    func removeTask(index: Int) {
-        tasks.remove(at: index)
-        save()
-    }
+    
+    
+    #warning("removeTask を追加")
+    
+    
     
     func save() {
         #warning("UserDefaults の保存の処理")
-        let encoder = JSONEncoder()
-        do {
-            let data = try encoder.encode(tasks)
-            UserDefaults.standard.set(data, forKey: userDefaultsTasksKey)
-        } catch {
-            print(error)
-        }
+        
         delegate?.saved()
     }
     
-    func load() {
-        let decoder = JSONDecoder()
-        do {
-            guard let data = UserDefaults.standard.data(forKey: userDefaultsTasksKey) else {
-                return
-            }
-            tasks = try decoder.decode([Task].self, from: data)
-        } catch {
-            print(error)
-        }
-        delegate?.loaded()
-    }
+    
+    #warning("load の処理")
+
 }

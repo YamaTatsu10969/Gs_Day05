@@ -17,7 +17,7 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         
         // この ViewController で delegate のメソッドを使うために記述している。
         tableView.delegate = self
-        // この ViewController で datasouce のメソッドを使うために記述している。
+        // この ViewController で dataSource のメソッドを使うために記述している。
         tableView.dataSource = self
         // nib と xib はほぼ一緒
         let nib = UINib(nibName: "CustomCell", bundle: nil)
@@ -29,7 +29,8 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         TaskCollection.shared.delegate = self
         
         #warning("ロードする")
-        TaskCollection.shared.load()
+
+        
         
         setupNavigationBar()
         // Do any additional setup after loading the view.
@@ -60,16 +61,12 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     #warning("ここにタップした時の処理を入れる")
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = AddViewController()
-        vc.selectIndex = indexPath.row
-        navigationController?.pushViewController(vc, animated: true)
-    }
+    
+    
     
     #warning("ここにスワイプして削除する時の処理を入れる")
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        TaskCollection.shared.removeTask(index: indexPath.row)
-    }
+    
+    
     
 }
 
@@ -78,10 +75,6 @@ extension TaskListViewController: TaskCollectionDelegate {
     // デリゲートのメソッド
     func saved() {
         // tableView をリロードして、画面を更新する。
-        tableView.reloadData()
-    }
-    
-    func loaded() {
         tableView.reloadData()
     }
 }
