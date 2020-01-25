@@ -1,5 +1,8 @@
 # Gs_Day05
 
+## 教材
+[Day5 Todoアプリがどんな仕組みで動いているのかを知ろう！ライブラリの入れ方を知ろう！ - Qiita](https://qiita.com/yamatatsu10969/private/df4fa0a8a2676b36d8fe)
+
 ## 授業でやること
 
 1. 復習（tableView の使い方、delegate の使い方）
